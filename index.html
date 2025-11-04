@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Beautiful Shaomi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #e91e63;
+            --secondary: #ff4081;
+            --accent: #f8bbd9;
+            --dark: #880e4f;
+            --light: #fce4ec;
+            --text: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #fce4ec 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 60px 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            z-index: -1;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px;
+            animation: fadeInDown 1.5s ease;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 60px 0;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+        }
+
+        .photo-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .photo-card:hover .photo-img {
+            transform: scale(1.1);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 30px 20px 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .photo-card:hover .photo-overlay {
+            transform: translateY(0);
+        }
+
+        .photo-caption {
+            font-size: 1.1rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Love Message */
+        .love-message {
+            background: white;
+            border-radius: 25px;
+            padding: 50px 40px;
+            margin: 60px 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s, transform 1s;
+        }
+
+        .love-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .love-message::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .message-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .message-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .message-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--primary);
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        /* Notes Section */
+        .notes-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 60px 0;
+        }
+
+        .note {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .note:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .note::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .note i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background: var(--light);
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            border-radius: 50%;
+            transition: all 0.4s ease;
+        }
+
+        .note:hover i {
+            transform: rotate(15deg) scale(1.1);
+            background: var(--primary);
+            color: white;
+        }
+
+        .note-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+
+        .note p {
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(45deg, var(--dark), var(--primary));
+            text-align: center;
+            padding: 50px 30px;
+            margin-top: 70px;
+            border-radius: 25px 25px 0 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), white, var(--accent));
+        }
+
+        .footer-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s infinite;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart-float {
+            position: absolute;
+            color: rgba(233, 30, 99, 0.3);
+            font-size: 24px;
+            animation: float 10s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .footer-text {
+                font-size: 2.8rem;
+            }
+            
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .message-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .footer-text {
+                font-size: 2.2rem;
+            }
+            
+            .notes-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .love-message {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="hearts-container"></div>
+    
+    <div class="container">
+        <header>
+            <div class="header-bg"></div>
+            <h1>For My Beautiful Shaomi <i class="fas fa-heart"></i></h1>
+            <p class="subtitle">You are the sunshine that brightens my world and the melody that fills my heart with joy</p>
+        </header>
+        
+        <section class="photo-gallery">
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Beautiful smile" class="photo-img">
+                <div class="photo-overlay">
+                    <div class="photo-caption">Your smile is my favorite sight</div>
+                </div>
+            </div>
+            
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Lovely eyes" class="photo-img">
+                <div class="photo-overlay">
+                    <div class="photo-caption">Getting lost in your beautiful eyes</div>
+                </div>
+            </div>
+            
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Special moment" class="photo-img">
+                <div class="photo-overlay">
+                    <div class="photo-caption">Every moment with you is magical</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="love-message">
+            <h2 class="message-title">My Dearest Shaomi</h2>
+            <div class="message-content">
+                <p>My love, from the moment you came into my life, everything changed for the better. You brought colors to my monochrome world and meaning to my existence.</p>
+                <p>Your laughter is my favorite melody, your smile my greatest treasure, and your love my most precious gift. I cherish every moment we spend together, from our deep conversations to our comfortable silences.</p>
+                <p>You are not just my girlfriend; you are my best friend, my confidante, and my greatest supporter. With you by my side, I feel like I can conquer any challenge that life throws at us.</p>
+                <p>I promise to always cherish you, support your dreams, and love you more with each passing day. You are the most beautiful person I know, inside and out.</p>
+                <div class="signature">Forever yours,<br>Your Love</div>
+            </div>
+        </section>
+        
+        <section class="notes-section">
+            <div class="note">
+                <i class="fas fa-heart"></i>
+                <h3 class="note-title">What I Adore About You</h3>
+                <p>Your kind heart, your infectious laughter, the way you care for others, and your beautiful soul that shines through everything you do.</p>
+            </div>
+            
+            <div class="note">
+                <i class="fas fa-star"></i>
+                <h3 class="note-title">My Favorite Memories</h3>
+                <p>Our first date, that spontaneous road trip, staying up all night talking, and every little moment that made me fall deeper in love with you.</p>
+            </div>
+            
+            <div class="note">
+                <i class="fas fa-music"></i>
+                <h3 class="note-title">Our Song</h3>
+                <p>Every love song reminds me of you, but "Perfect" by Ed Sheeran will always be our special melody that brings back beautiful memories.</p>
+            </div>
+            
+            <div class="note">
+                <i class="fas fa-gem"></i>
+                <h3 class="note-title">You Are Precious</h3>
+                <p>You are more valuable than any gem, more beautiful than any sunset, and more special than any dream I've ever had.</p>
+            </div>
+        </section>
+        
+        <footer class="footer">
+            <div class="footer-text">Made with <i class="fas fa-heart"></i> for Shaomi</div>
+        </footer>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartCount = 25;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤';
+                heart.classList.add('heart-float');
+                
+                // Random position and animation delay
+                const leftPos = Math.random() * 100;
+                const delay = Math.random() * 10;
+                const size = Math.random() * 10 + 20;
+                
+                heart.style.left = `${leftPos}vw`;
+                heart.style.animationDelay = `${delay}s`;
+                heart.style.fontSize = `${size}px`;
+                
+                container.appendChild(heart);
+            }
+        }
+        
+        // Scroll animation for elements
+        function checkVisibility() {
+            const elements = document.querySelectorAll('.photo-card, .love-message, .note');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // Initialize everything when page loads
+        window.addEventListener('load', function() {
+            createHearts();
+            checkVisibility();
+            
+            // Add scroll event listener
+            window.addEventListener('scroll', checkVisibility);
+        });
+        
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click effect to photos
+            const photos = document.querySelectorAll('.photo-card');
+            photos.forEach(photo => {
+                photo.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 300);
+                });
+            });
+            
+            // Add pulse animation to heart in header on hover
+            const headerHeart = document.querySelector('header .fa-heart');
+            headerHeart.addEventListener('mouseover', function() {
+                this.style.animation = 'pulse 0.8s infinite';
+            });
+            
+            headerHeart.addEventListener('mouseout', function() {
+                this.style.animation = '';
+            });
+        });
+    </script>
+</body>
+</html>
